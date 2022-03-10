@@ -5544,7 +5544,6 @@ var $author$project$Main$centerHeadlineStyle = _List_fromArray(
 		A2($elm$html$Html$Attributes$style, 'margin', '2rem')
 	]);
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $author$project$Main$NewGame = {$: 5};
 var $author$project$Main$Play = {$: 4};
 var $author$project$Main$UpdateBetValue = function (a) {
@@ -5552,6 +5551,10 @@ var $author$project$Main$UpdateBetValue = function (a) {
 };
 var $elm$html$Html$article = _VirtualDom_node('article');
 var $elm$html$Html$button = _VirtualDom_node('button');
+var $author$project$Main$cardContentPStyle = _List_fromArray(
+	[
+		A2($elm$html$Html$Attributes$style, 'font-size', '3rem')
+	]);
 var $author$project$Main$cardToString = function (card) {
 	if (!card.$) {
 		var value = card.a;
@@ -5642,6 +5645,7 @@ var $elm$html$Html$Events$onInput = function (tagger) {
 			A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetValue)));
 };
 var $elm$html$Html$p = _VirtualDom_node('p');
+var $author$project$Main$standardFontSize = A2($elm$html$Html$Attributes$style, 'font-size', '4rem');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$Main$showError = function (value) {
@@ -5649,7 +5653,8 @@ var $author$project$Main$showError = function (value) {
 		var string = value.a;
 		return A2(
 			$elm$html$Html$p,
-			_List_Nil,
+			_List_fromArray(
+				[$author$project$Main$standardFontSize]),
 			_List_fromArray(
 				[
 					$elm$html$Html$text(string)
@@ -5658,22 +5663,22 @@ var $author$project$Main$showError = function (value) {
 		return A2($elm$html$Html$div, _List_Nil, _List_Nil);
 	}
 };
-var $elm$html$Html$h3 = _VirtualDom_node('h3');
-var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $author$project$Main$getGameStateMessage = F3(
 	function (cardA, cardB, cardC) {
 		return ((_Utils_cmp(cardA, cardC) < 0) && (_Utils_cmp(cardB, cardC) > 0)) ? A2(
-			$elm$html$Html$h2,
-			_List_Nil,
+			$elm$html$Html$div,
+			_List_fromArray(
+				[$author$project$Main$standardFontSize]),
 			_List_fromArray(
 				[
-					$elm$html$Html$text('You won 💵 🎉')
+					$elm$html$Html$text('You won :)')
 				])) : A2(
-			$elm$html$Html$h2,
-			_List_Nil,
+			$elm$html$Html$div,
+			_List_fromArray(
+				[$author$project$Main$standardFontSize]),
 			_List_fromArray(
 				[
-					$elm$html$Html$text('You loose 🐳')
+					$elm$html$Html$text('You loose :(')
 				]));
 	});
 var $elm$core$Maybe$map3 = F4(
@@ -5714,11 +5719,12 @@ var $author$project$Main$showLastWinLose = function (game) {
 var $author$project$Main$showLastGame = function (game) {
 	if (game.$ === 1) {
 		return A2(
-			$elm$html$Html$h3,
-			_List_Nil,
+			$elm$html$Html$div,
+			_List_fromArray(
+				[$author$project$Main$standardFontSize]),
 			_List_fromArray(
 				[
-					$elm$html$Html$text('This is your first game 🏉')
+					$elm$html$Html$text('This is your first game')
 				]));
 	} else {
 		var value = game.a;
@@ -5730,7 +5736,7 @@ var $author$project$Main$showLastGame = function (game) {
 					$author$project$Main$showLastWinLose(value),
 					A2(
 					$elm$html$Html$p,
-					_List_Nil,
+					$author$project$Main$cardContentPStyle,
 					_List_fromArray(
 						[
 							$elm$html$Html$text(
@@ -5738,7 +5744,7 @@ var $author$project$Main$showLastGame = function (game) {
 						])),
 					A2(
 					$elm$html$Html$p,
-					_List_Nil,
+					$author$project$Main$cardContentPStyle,
 					_List_fromArray(
 						[
 							$elm$html$Html$text(
@@ -5746,11 +5752,11 @@ var $author$project$Main$showLastGame = function (game) {
 						])),
 					A2(
 					$elm$html$Html$p,
-					_List_Nil,
+					$author$project$Main$cardContentPStyle,
 					_List_fromArray(
 						[
 							$elm$html$Html$text(
-							'Card 3: ' + $author$project$Main$cardToString(value.w))
+							'Drawn Card: ' + $author$project$Main$cardToString(value.w))
 						]))
 				]));
 	}
@@ -5765,7 +5771,7 @@ var $author$project$Main$showGame = function (model) {
 			[
 				A2(
 				$elm$html$Html$p,
-				_List_Nil,
+				$author$project$Main$cardContentPStyle,
 				_List_fromArray(
 					[
 						$elm$html$Html$text('You lose all you money')
@@ -5774,7 +5780,8 @@ var $author$project$Main$showGame = function (model) {
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick($author$project$Main$NewGame)
+						$elm$html$Html$Events$onClick($author$project$Main$NewGame),
+						$author$project$Main$standardFontSize
 					]),
 				_List_fromArray(
 					[
@@ -5787,7 +5794,7 @@ var $author$project$Main$showGame = function (model) {
 			[
 				A2(
 				$elm$html$Html$p,
-				_List_Nil,
+				$author$project$Main$cardContentPStyle,
 				_List_fromArray(
 					[
 						$elm$html$Html$text(
@@ -5795,7 +5802,7 @@ var $author$project$Main$showGame = function (model) {
 					])),
 				A2(
 				$elm$html$Html$p,
-				_List_Nil,
+				$author$project$Main$cardContentPStyle,
 				_List_fromArray(
 					[
 						$elm$html$Html$text(
@@ -5803,7 +5810,7 @@ var $author$project$Main$showGame = function (model) {
 					])),
 				A2(
 				$elm$html$Html$p,
-				_List_Nil,
+				$author$project$Main$cardContentPStyle,
 				_List_fromArray(
 					[
 						$elm$html$Html$text(
@@ -5811,7 +5818,7 @@ var $author$project$Main$showGame = function (model) {
 					])),
 				A2(
 				$elm$html$Html$p,
-				_List_Nil,
+				$author$project$Main$cardContentPStyle,
 				_List_fromArray(
 					[
 						$elm$html$Html$text(
@@ -5834,7 +5841,8 @@ var $author$project$Main$showGame = function (model) {
 				$elm$html$Html$button,
 				_List_fromArray(
 					[
-						$elm$html$Html$Events$onClick($author$project$Main$Play)
+						$elm$html$Html$Events$onClick($author$project$Main$Play),
+						$author$project$Main$standardFontSize
 					]),
 				_List_fromArray(
 					[
@@ -5844,27 +5852,49 @@ var $author$project$Main$showGame = function (model) {
 				$author$project$Main$showError(model.D)
 			]));
 };
+var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $author$project$Main$headerStyle = _List_fromArray(
+	[
+		A2($elm$html$Html$Attributes$style, 'font-size', '3rem'),
+		A2($elm$html$Html$Attributes$style, 'text-align', 'center')
+	]);
+var $author$project$Main$showHeader = A2(
+	$elm$html$Html$div,
+	$author$project$Main$headerStyle,
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$h1,
+			_List_fromArray(
+				[
+					A2($elm$html$Html$Attributes$style, 'font-size', '4rem')
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text('ACEY DUCEY CARD GAME')
+				])),
+			A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Creative Computing Morristown, New Jersey')
+				])),
+			A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('\n        Acey-Ducey is played in the following manner. The Dealer (Computer) deals two cards face up. \n        You have an option to bet or not bet depending on whether or not you feel the card will have a value between the first two.\n        If you do not want to bet, bet 0.\n        ')
+				]))
+		]));
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
 		$author$project$Main$centerHeadlineStyle,
 		_List_fromArray(
 			[
-				A2(
-				$elm$html$Html$h1,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text('ACEY DUCEY CARD GAME')
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Creative Computing Morristown, New Jersey')
-					])),
-				$elm$html$Html$text('\n        Acey-Ducey is played in the following manner. The Dealer (Computer) deals two cards face up. \n        You have an option to bet or not bet depending on whether or not you fell the card will have a value between the first two.\n        If you do not want to bet, bet 0.\n        '),
+				$author$project$Main$showHeader,
 				$author$project$Main$showGame(model)
 			]));
 };

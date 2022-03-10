@@ -17,6 +17,10 @@ main =
         }
 
 
+
+-- Models
+
+
 type alias Model =
     { money : Int
     , currentGame : Game
@@ -33,9 +37,17 @@ type alias Game =
     }
 
 
+
+-- Init
+
+
 init : () -> ( Model, Cmd Msg )
 init _ =
     ( { money = 100, currentGame = { cardA = Nothing, cardB = Nothing, cardC = Nothing }, lastGame = Nothing, moneyBet = 0, error = Nothing }, Random.generate NewCard newCard )
+
+
+
+-- Messages
 
 
 type Msg
@@ -45,6 +57,10 @@ type Msg
     | NewCardC Int
     | Play
     | NewGame
+
+
+
+-- Update
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -133,17 +149,29 @@ subscriptions _ =
     Sub.none
 
 
+
+-- Views
+
+
 view : Model -> Html Msg
 view model =
     div centerHeadlineStyle
-        [ h1 [] [ text "ACEY DUCEY CARD GAME" ]
+        [ showHeader
+        , showGame model
+        ]
+
+
+showHeader =
+    div headerStyle
+        [ h1 [ style "font-size" "4rem" ] [ text "ACEY DUCEY CARD GAME" ]
         , div [] [ text "Creative Computing Morristown, New Jersey" ]
-        , text """
+        , div []
+            [ text """
         Acey-Ducey is played in the following manner. The Dealer (Computer) deals two cards face up. 
-        You have an option to bet or not bet depending on whether or not you fell the card will have a value between the first two.
+        You have an option to bet or not bet depending on whether or not you feel the card will have a value between the first two.
         If you do not want to bet, bet 0.
         """
-        , showGame model
+            ]
         ]
 
 
@@ -151,50 +179,35 @@ showGame : Model -> Html Msg
 showGame model =
     if model.money <= 0 then
         article gameStyle
-            [ p [] [ text "You lose all you money" ]
-            , button [ Html.Events.onClick NewGame ] [ text "Again" ]
+            [ p cardContentPStyle [ text "You lose all you money" ]
+            , button [ Html.Events.onClick NewGame, standardFontSize ] [ text "Again" ]
             ]
 
     else
         article gameStyle
-            [ p [] [ text ("Currently you have " ++ String.fromInt model.money ++ " in your pocket.") ]
-            , p [] [ text ("Card 1: " ++ cardToString model.currentGame.cardA) ]
-            , p [] [ text ("Card 2: " ++ cardToString model.currentGame.cardB) ]
-            , p [] [ text ("Your current bet is " ++ String.fromInt model.moneyBet) ]
+            [ p cardContentPStyle [ text ("Currently you have " ++ String.fromInt model.money ++ " in your pocket.") ]
+            , p cardContentPStyle [ text ("Card 1: " ++ cardToString model.currentGame.cardA) ]
+            , p cardContentPStyle [ text ("Card 2: " ++ cardToString model.currentGame.cardB) ]
+            , p cardContentPStyle [ text ("Your current bet is " ++ String.fromInt model.moneyBet) ]
             , input [ type_ "range", Html.Attributes.max (String.fromInt model.money), Html.Attributes.min "0", Html.Attributes.value (String.fromInt model.moneyBet), onInput UpdateBetValue ] []
-            , button [ Html.Events.onClick Play ] [ text "Play" ]
+            , button [ Html.Events.onClick Play, standardFontSize ] [ text "Play" ]
             , showLastGame model.lastGame
             , showError model.error
             ]
-
-
-gameStyle : List (Attribute msg)
-gameStyle =
-    [ style "width" "100%"
-    , style "max-width" "70rem"
-    ]
-
-
-centerHeadlineStyle : List (Attribute msg)
-centerHeadlineStyle =
-    [ style "display" "grid"
-    , style "place-items" "center"
-    , style "margin" "2rem"
-    ]
 
 
 showLastGame : Maybe Game -> Html Msg
 showLastGame game =
     case game of
         Nothing ->
-            h3 [] [ text "This is your first game 🏉" ]
+            div [ standardFontSize ] [ text "This is your first game" ]
 
         Just value ->
             div []
                 [ showLastWinLose value
-                , p [] [ text ("Card 1: " ++ cardToString value.cardA) ]
-                , p [] [ text ("Card 2: " ++ cardToString value.cardB) ]
-                , p [] [ text ("Card 3: " ++ cardToString value.cardC) ]
+                , p cardContentPStyle [ text ("Card 1: " ++ cardToString value.cardA) ]
+                , p cardContentPStyle [ text ("Card 2: " ++ cardToString value.cardB) ]
+                , p cardContentPStyle [ text ("Drawn Card: " ++ cardToString value.cardC) ]
                 ]
 
 
@@ -206,20 +219,24 @@ showLastWinLose game =
 getGameStateMessage : Int -> Int -> Int -> Html Msg
 getGameStateMessage cardA cardB cardC =
     if cardA < cardC && cardB > cardC then
-        h2 [] [ text "You won 💵 🎉" ]
+        div [ standardFontSize ] [ text "You won :)" ]
 
     else
-        h2 [] [ text "You loose 🐳" ]
+        div [ standardFontSize ] [ text "You loose :(" ]
 
 
 showError : Maybe String -> Html Msg
 showError value =
     case value of
         Just string ->
-            p [] [ text string ]
+            p [ standardFontSize ] [ text string ]
 
         Nothing ->
             div [] []
+
+
+
+-- Helper
 
 
 cardToString : Maybe Int -> String
@@ -253,3 +270,35 @@ cardToString card =
 newCard : Random.Generator Int
 newCard =
     Random.int 2 14
+
+
+
+-- Styles
+
+
+headerStyle =
+    [ style "font-size" "3rem", style "text-align" "center" ]
+
+
+cardContentPStyle =
+    [ style "font-size" "3rem"
+    ]
+
+
+gameStyle : List (Attribute msg)
+gameStyle =
+    [ style "width" "100%"
+    , style "max-width" "70rem"
+    ]
+
+
+centerHeadlineStyle : List (Attribute msg)
+centerHeadlineStyle =
+    [ style "display" "grid"
+    , style "place-items" "center"
+    , style "margin" "2rem"
+    ]
+
+
+standardFontSize =
+    style "font-size" "4rem"
