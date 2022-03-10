@@ -137,7 +137,7 @@ view : Model -> Html Msg
 view model =
     div centerHeadlineStyle
         [ h1 [] [ text "ACEY DUCEY CARD GAME" ]
-        , p [] [ text "Creative Computing Morristown, New Jersey" ]
+        , div [] [ text "Creative Computing Morristown, New Jersey" ]
         , text """
         Acey-Ducey is played in the following manner. The Dealer (Computer) deals two cards face up. 
         You have an option to bet or not bet depending on whether or not you fell the card will have a value between the first two.
@@ -150,28 +150,36 @@ view model =
 showGame : Model -> Html Msg
 showGame model =
     if model.money <= 0 then
-        div []
+        article gameStyle
             [ p [] [ text "You lose all you money" ]
             , button [ Html.Events.onClick NewGame ] [ text "Again" ]
             ]
 
     else
-        div []
+        article gameStyle
             [ p [] [ text ("Currently you have " ++ String.fromInt model.money ++ " in your pocket.") ]
-            , p [] [ text ("Card A: " ++ cardToString model.currentGame.cardA) ]
-            , p [] [ text ("Card B: " ++ cardToString model.currentGame.cardB) ]
+            , p [] [ text ("Card 1: " ++ cardToString model.currentGame.cardA) ]
+            , p [] [ text ("Card 2: " ++ cardToString model.currentGame.cardB) ]
             , p [] [ text ("Your current bet is " ++ String.fromInt model.moneyBet) ]
-            , input [ type_ "range", Html.Attributes.max (String.fromInt model.money), Html.Attributes.min "0", onInput UpdateBetValue ] []
+            , input [ type_ "range", Html.Attributes.max (String.fromInt model.money), Html.Attributes.min "0", Html.Attributes.value (String.fromInt model.moneyBet), onInput UpdateBetValue ] []
             , button [ Html.Events.onClick Play ] [ text "Play" ]
             , showLastGame model.lastGame
             , showError model.error
             ]
 
 
+gameStyle : List (Attribute msg)
+gameStyle =
+    [ style "width" "100%"
+    , style "max-width" "70rem"
+    ]
+
+
 centerHeadlineStyle : List (Attribute msg)
 centerHeadlineStyle =
     [ style "display" "grid"
     , style "place-items" "center"
+    , style "margin" "2rem"
     ]
 
 
@@ -179,15 +187,14 @@ showLastGame : Maybe Game -> Html Msg
 showLastGame game =
     case game of
         Nothing ->
-            h2 [] [ text "First Game" ]
+            h3 [] [ text "This is your first game 🏉" ]
 
         Just value ->
             div []
-                [ h2 [] [ text "Last game" ]
-                , p [] [ text ("Last Card A " ++ cardToString value.cardA) ]
-                , p [] [ text ("Last Card B " ++ cardToString value.cardB) ]
-                , p [] [ text ("Last Card C " ++ cardToString value.cardC) ]
-                , showLastWinLose value
+                [ showLastWinLose value
+                , p [] [ text ("Card 1: " ++ cardToString value.cardA) ]
+                , p [] [ text ("Card 2: " ++ cardToString value.cardB) ]
+                , p [] [ text ("Card 3: " ++ cardToString value.cardC) ]
                 ]
 
 
@@ -199,10 +206,10 @@ showLastWinLose game =
 getGameStateMessage : Int -> Int -> Int -> Html Msg
 getGameStateMessage cardA cardB cardC =
     if cardA < cardC && cardB > cardC then
-        div [] [ text "You won 💵 🎉" ]
+        h2 [] [ text "You won 💵 🎉" ]
 
     else
-        text "You loose 🐳"
+        h2 [] [ text "You loose 🐳" ]
 
 
 showError : Maybe String -> Html Msg
