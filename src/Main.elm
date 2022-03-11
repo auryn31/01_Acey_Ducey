@@ -109,13 +109,13 @@ update msg model =
             ( model, Random.generate NewCardC newCard )
 
         NewCardC card ->
-            ( calculateNewState card model, Random.generate NewCard newCard )
+            calculateNewState card model
 
         NewGame ->
             init ()
 
 
-calculateNewState : Int -> Model -> Model
+calculateNewState : Int -> Model -> ( Model, Cmd Msg )
 calculateNewState cardC model =
     case model.currentGame.cardA of
         Just cardA ->
@@ -125,20 +125,23 @@ calculateNewState cardC model =
                         currentGame =
                             model.currentGame
                     in
-                    if cardA < cardC && cardB > cardC then
-                        { model | money = model.money + model.moneyBet, currentGame = { currentGame | cardA = Nothing, cardB = Nothing }, lastGame = Just { cardA = model.currentGame.cardA, cardB = model.currentGame.cardB, cardC = Just cardC } }
+                    if cardC == cardA || cardC == cardB then
+                        ( model, Random.generate NewCardC newCard )
+
+                    else if cardA < cardC && cardC < cardB then
+                        ( { model | money = model.money + model.moneyBet, currentGame = { currentGame | cardA = Nothing, cardB = Nothing }, lastGame = Just { cardA = model.currentGame.cardA, cardB = model.currentGame.cardB, cardC = Just cardC } }, Random.generate NewCard newCard )
 
                     else if model.moneyBet > model.money - model.moneyBet then
-                        { model | money = model.money - model.moneyBet, moneyBet = model.money - model.moneyBet, currentGame = { currentGame | cardA = Nothing, cardB = Nothing }, lastGame = Just { cardA = model.currentGame.cardA, cardB = model.currentGame.cardB, cardC = Just cardC } }
+                        ( { model | money = model.money - model.moneyBet, moneyBet = model.money - model.moneyBet, currentGame = { currentGame | cardA = Nothing, cardB = Nothing }, lastGame = Just { cardA = model.currentGame.cardA, cardB = model.currentGame.cardB, cardC = Just cardC } }, Random.generate NewCard newCard )
 
                     else
-                        { model | money = model.money - model.moneyBet, currentGame = { currentGame | cardA = Nothing, cardB = Nothing }, lastGame = Just { cardA = model.currentGame.cardA, cardB = model.currentGame.cardB, cardC = Just cardC } }
+                        ( { model | money = model.money - model.moneyBet, currentGame = { currentGame | cardA = Nothing, cardB = Nothing }, lastGame = Just { cardA = model.currentGame.cardA, cardB = model.currentGame.cardB, cardC = Just cardC } }, Random.generate NewCard newCard )
 
                 Nothing ->
-                    model
+                    ( model, Cmd.none )
 
         Nothing ->
-            model
+            ( model, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg

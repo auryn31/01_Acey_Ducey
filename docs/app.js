@@ -5383,6 +5383,8 @@ var $author$project$Main$subscriptions = function (_v0) {
 var $author$project$Main$NewCardC = function (a) {
 	return {$: 3, a: a};
 };
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$calculateNewState = F2(
 	function (cardC, model) {
 		var _v0 = model.a.d;
@@ -5392,56 +5394,62 @@ var $author$project$Main$calculateNewState = F2(
 			if (!_v1.$) {
 				var cardB = _v1.a;
 				var currentGame = model.a;
-				return ((_Utils_cmp(cardA, cardC) < 0) && (_Utils_cmp(cardB, cardC) > 0)) ? _Utils_update(
+				return (_Utils_eq(cardC, cardA) || _Utils_eq(cardC, cardB)) ? _Utils_Tuple2(
 					model,
-					{
-						a: _Utils_update(
-							currentGame,
-							{d: $elm$core$Maybe$Nothing, g: $elm$core$Maybe$Nothing}),
-						D: $elm$core$Maybe$Just(
-							{
-								d: model.a.d,
-								g: model.a.g,
-								w: $elm$core$Maybe$Just(cardC)
-							}),
-						i: model.i + model.j
-					}) : ((_Utils_cmp(model.j, model.i - model.j) > 0) ? _Utils_update(
-					model,
-					{
-						a: _Utils_update(
-							currentGame,
-							{d: $elm$core$Maybe$Nothing, g: $elm$core$Maybe$Nothing}),
-						D: $elm$core$Maybe$Just(
-							{
-								d: model.a.d,
-								g: model.a.g,
-								w: $elm$core$Maybe$Just(cardC)
-							}),
-						i: model.i - model.j,
-						j: model.i - model.j
-					}) : _Utils_update(
-					model,
-					{
-						a: _Utils_update(
-							currentGame,
-							{d: $elm$core$Maybe$Nothing, g: $elm$core$Maybe$Nothing}),
-						D: $elm$core$Maybe$Just(
-							{
-								d: model.a.d,
-								g: model.a.g,
-								w: $elm$core$Maybe$Just(cardC)
-							}),
-						i: model.i - model.j
-					}));
+					A2($elm$random$Random$generate, $author$project$Main$NewCardC, $author$project$Main$newCard)) : (((_Utils_cmp(cardA, cardC) < 0) && (_Utils_cmp(cardC, cardB) < 0)) ? _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							a: _Utils_update(
+								currentGame,
+								{d: $elm$core$Maybe$Nothing, g: $elm$core$Maybe$Nothing}),
+							D: $elm$core$Maybe$Just(
+								{
+									d: model.a.d,
+									g: model.a.g,
+									w: $elm$core$Maybe$Just(cardC)
+								}),
+							i: model.i + model.j
+						}),
+					A2($elm$random$Random$generate, $author$project$Main$NewCard, $author$project$Main$newCard)) : ((_Utils_cmp(model.j, model.i - model.j) > 0) ? _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							a: _Utils_update(
+								currentGame,
+								{d: $elm$core$Maybe$Nothing, g: $elm$core$Maybe$Nothing}),
+							D: $elm$core$Maybe$Just(
+								{
+									d: model.a.d,
+									g: model.a.g,
+									w: $elm$core$Maybe$Just(cardC)
+								}),
+							i: model.i - model.j,
+							j: model.i - model.j
+						}),
+					A2($elm$random$Random$generate, $author$project$Main$NewCard, $author$project$Main$newCard)) : _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							a: _Utils_update(
+								currentGame,
+								{d: $elm$core$Maybe$Nothing, g: $elm$core$Maybe$Nothing}),
+							D: $elm$core$Maybe$Just(
+								{
+									d: model.a.d,
+									g: model.a.g,
+									w: $elm$core$Maybe$Just(cardC)
+								}),
+							i: model.i - model.j
+						}),
+					A2($elm$random$Random$generate, $author$project$Main$NewCard, $author$project$Main$newCard))));
 			} else {
-				return model;
+				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 			}
 		} else {
-			return model;
+			return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 		}
 	});
-var $elm$core$Platform$Cmd$batch = _Platform_batch;
-var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
@@ -5527,9 +5535,7 @@ var $author$project$Main$update = F2(
 					A2($elm$random$Random$generate, $author$project$Main$NewCardC, $author$project$Main$newCard));
 			case 3:
 				var card = msg.a;
-				return _Utils_Tuple2(
-					A2($author$project$Main$calculateNewState, card, model),
-					A2($elm$random$Random$generate, $author$project$Main$NewCard, $author$project$Main$newCard));
+				return A2($author$project$Main$calculateNewState, card, model);
 			default:
 				return $author$project$Main$init(0);
 		}
