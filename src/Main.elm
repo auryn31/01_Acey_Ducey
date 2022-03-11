@@ -124,9 +124,6 @@ calculateNewState cardC model =
                     let
                         currentGame =
                             model.currentGame
-
-                        lastGame =
-                            model.lastGame
                     in
                     if cardA < cardC && cardB > cardC then
                         { model | money = model.money + model.moneyBet, currentGame = { currentGame | cardA = Nothing, cardB = Nothing }, lastGame = Just { cardA = model.currentGame.cardA, cardB = model.currentGame.cardB, cardC = Just cardC } }
@@ -161,6 +158,7 @@ view model =
         ]
 
 
+showHeader : Html msg
 showHeader =
     div headerStyle
         [ h1 [ style "font-size" "4rem" ] [ text "ACEY DUCEY CARD GAME" ]
@@ -276,12 +274,14 @@ newCard =
 -- Styles
 
 
+headerStyle : List (Attribute msg)
 headerStyle =
     [ style "font-size" "3rem", style "text-align" "center" ]
 
 
+cardContentPStyle : List (Attribute msg)
 cardContentPStyle =
-    [ style "font-size" "3rem"
+    [ style "font-size" "2rem"
     ]
 
 
@@ -300,5 +300,6 @@ centerHeadlineStyle =
     ]
 
 
+standardFontSize : Attribute msg
 standardFontSize =
     style "font-size" "4rem"
