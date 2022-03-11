@@ -279,7 +279,7 @@ newCard =
 
 headerStyle : List (Attribute msg)
 headerStyle =
-    [ style "font-size" "3rem", style "text-align" "center" ]
+    [ style "font-size" "2rem", style "text-align" "center" ]
 
 
 cardContentPStyle : List (Attribute msg)
@@ -305,4 +305,4 @@ centerHeadlineStyle =
 
 standardFontSize : Attribute msg
 standardFontSize =
-    style "font-size" "4rem"
+    style "font-size" "2rem"

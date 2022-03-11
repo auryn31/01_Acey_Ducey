@@ -5650,7 +5650,7 @@ var $elm$html$Html$Events$onInput = function (tagger) {
 			A2($elm$json$Json$Decode$map, tagger, $elm$html$Html$Events$targetValue)));
 };
 var $elm$html$Html$p = _VirtualDom_node('p');
-var $author$project$Main$standardFontSize = A2($elm$html$Html$Attributes$style, 'font-size', '4rem');
+var $author$project$Main$standardFontSize = A2($elm$html$Html$Attributes$style, 'font-size', '2rem');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$Main$showError = function (value) {
@@ -5860,7 +5860,7 @@ var $author$project$Main$showGame = function (model) {
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
 var $author$project$Main$headerStyle = _List_fromArray(
 	[
-		A2($elm$html$Html$Attributes$style, 'font-size', '3rem'),
+		A2($elm$html$Html$Attributes$style, 'font-size', '2rem'),
 		A2($elm$html$Html$Attributes$style, 'text-align', 'center')
 	]);
 var $author$project$Main$showHeader = A2(
