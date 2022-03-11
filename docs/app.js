@@ -5368,8 +5368,8 @@ var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2(
 		{
 			a: {d: $elm$core$Maybe$Nothing, g: $elm$core$Maybe$Nothing, w: $elm$core$Maybe$Nothing},
+			C: $elm$core$Maybe$Nothing,
 			D: $elm$core$Maybe$Nothing,
-			y: $elm$core$Maybe$Nothing,
 			i: 100,
 			j: 0
 		},
@@ -5391,7 +5391,6 @@ var $author$project$Main$calculateNewState = F2(
 			var _v1 = model.a.g;
 			if (!_v1.$) {
 				var cardB = _v1.a;
-				var lastGame = model.y;
 				var currentGame = model.a;
 				return ((_Utils_cmp(cardA, cardC) < 0) && (_Utils_cmp(cardB, cardC) > 0)) ? _Utils_update(
 					model,
@@ -5399,7 +5398,7 @@ var $author$project$Main$calculateNewState = F2(
 						a: _Utils_update(
 							currentGame,
 							{d: $elm$core$Maybe$Nothing, g: $elm$core$Maybe$Nothing}),
-						y: $elm$core$Maybe$Just(
+						D: $elm$core$Maybe$Just(
 							{
 								d: model.a.d,
 								g: model.a.g,
@@ -5412,7 +5411,7 @@ var $author$project$Main$calculateNewState = F2(
 						a: _Utils_update(
 							currentGame,
 							{d: $elm$core$Maybe$Nothing, g: $elm$core$Maybe$Nothing}),
-						y: $elm$core$Maybe$Just(
+						D: $elm$core$Maybe$Just(
 							{
 								d: model.a.d,
 								g: model.a.g,
@@ -5426,7 +5425,7 @@ var $author$project$Main$calculateNewState = F2(
 						a: _Utils_update(
 							currentGame,
 							{d: $elm$core$Maybe$Nothing, g: $elm$core$Maybe$Nothing}),
-						y: $elm$core$Maybe$Just(
+						D: $elm$core$Maybe$Just(
 							{
 								d: model.a.d,
 								g: model.a.g,
@@ -5462,20 +5461,20 @@ var $author$project$Main$update = F2(
 						_Utils_update(
 							model,
 							{
-								D: $elm$core$Maybe$Just('You cannot bet more than you have'),
+								C: $elm$core$Maybe$Just('You cannot bet more than you have'),
 								j: model.i
 							}),
 						$elm$core$Platform$Cmd$none) : _Utils_Tuple2(
 						_Utils_update(
 							model,
-							{D: $elm$core$Maybe$Nothing, j: newValue}),
+							{C: $elm$core$Maybe$Nothing, j: newValue}),
 						$elm$core$Platform$Cmd$none);
 				} else {
 					return _Utils_Tuple2(
 						_Utils_update(
 							model,
 							{
-								D: $elm$core$Maybe$Just('Wrong input for bet')
+								C: $elm$core$Maybe$Just('Wrong input for bet')
 							}),
 						$elm$core$Platform$Cmd$none);
 				}
@@ -5553,7 +5552,7 @@ var $elm$html$Html$article = _VirtualDom_node('article');
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $author$project$Main$cardContentPStyle = _List_fromArray(
 	[
-		A2($elm$html$Html$Attributes$style, 'font-size', '3rem')
+		A2($elm$html$Html$Attributes$style, 'font-size', '2rem')
 	]);
 var $author$project$Main$cardToString = function (card) {
 	if (!card.$) {
@@ -5848,8 +5847,8 @@ var $author$project$Main$showGame = function (model) {
 					[
 						$elm$html$Html$text('Play')
 					])),
-				$author$project$Main$showLastGame(model.y),
-				$author$project$Main$showError(model.D)
+				$author$project$Main$showLastGame(model.D),
+				$author$project$Main$showError(model.C)
 			]));
 };
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
